@@ -40,6 +40,7 @@ class Graphics:
         self.show_image(self.draw_default_markup(image))
 
     def draw_rectangle(self, image, rectangle, color):
+        x, y, w, h = rectangle
         image = cv2.rectangle(image, (int(x), int(y)), (int(x+w), int(y+h)), color, 2)
         return image
 
