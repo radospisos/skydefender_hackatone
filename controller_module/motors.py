@@ -2,7 +2,7 @@ import Jetson.GPIO as GPIO
 import time
 class Motors: #Создаём класс моторы
     def __init__(self, stepPin, dirPin): # Для каждого мотора пин шаговый (ШИМ) и пин направления
-        # GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BOARD)
         self.stepPin = stepPin # пин на котором задаётся движение мотора
         self.dirPin = dirPin #вот этот пин под вопросом
         # при создании экземпляра
