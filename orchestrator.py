@@ -1,6 +1,7 @@
 from optical_module.optical_module import OpticalModule
 from display_module.graphics import Graphics
 from display_module.gui import App
+from controller_module.controller import Controller
 from tkinter import *
 from PIL import Image
 from PIL import ImageTk
@@ -12,7 +13,8 @@ class Orchestrator:
         self.camera_channel = camera_channel
         self.optical_module = OpticalModule(self.camera_channel)
         self.display_module = Graphics()
-        self.frame = None
+        self.controller = Controller()
+
         self.frames_counter = 0
         self.scanning_modes = {
             '360scan': [self.full_range_scan, "Сканування на 360 градусів"],
@@ -21,22 +23,32 @@ class Orchestrator:
         }
         self.app = App(self.scanning_modes)
 
+        self.frame = None
+
+
     #def test_devices(self):
         #optical_module.camera.test_access(self.camera_channel)
 
     def full_range_scan(self):
+        self.controller.full_range_scan()
         print('Scanning 360 degrees..')
 
-    def sector_scan(self):
+    def sector_scan(self, lhs_angle, rhs_angle):
+        self.controller.sector_scan(lhs_angle, rhs_angle)
         print('Scanning sector..')
 
-    def sector_fix(self):
+    def sector_fix(self, angle):
+        self.controller.sector_fix(angle)
         print('Fixed in a sector..')
 
     def stream(self):
-        global label_widget
-        self.frames_counter += 1
+        #self.frames_counter += 1
         self.frame = self.optical_module.frame()
+
+        # if detected:
+            # controller.fast_find()
+        # else:
+            # track
 
         user_image = self.app.get_app_image(self.display_module.draw_default_markup(self.frame))
         self.app.video.photo_image = user_image

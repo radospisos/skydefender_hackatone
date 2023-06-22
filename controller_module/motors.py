@@ -1,5 +1,6 @@
 import Jetson.GPIO as GPIO
 import time
+
 class Motors: #Создаём класс моторы
     def __init__(self, stepPin, dirPin): # Для каждого мотора пин шаговый (ШИМ) и пин направления
         GPIO.setmode(GPIO.BOARD)
@@ -13,7 +14,6 @@ class Motors: #Создаём класс моторы
         self.final_time = 0
         self.angular_velocity = 0
         self.time_to_rotate = 0
-
         # для меня
         #print(stepPin, ' ', dirPin)
 
@@ -48,6 +48,3 @@ class Motors: #Создаём класс моторы
         return self.time_to_rotate
     def getAngularVelocity(self):
         return self.abs_angle/self.time_to_rotate
-
-
-

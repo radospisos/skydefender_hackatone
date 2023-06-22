@@ -48,9 +48,9 @@ class App(Tk):
         if option == self.scanning_modes['360scan'][1]:
             self.scanning_modes['360scan'][0]()
         elif option == self.scanning_modes['sector_scan'][1]:
-            self.scanning_modes['sector_scan'][0]()
+            self.scanning_modes['sector_scan'][0](float(self.sectorscan_entry1.get()), float(self.sectorscan_entry2.get()))
         elif option == self.scanning_modes['sector_fix'][1]:
-            self.scanning_modes['sector_fix'][0]()
+            self.scanning_modes['sector_fix'][0](float(self.sectorfix_entry.get()))
 
     def scanmode_options(self, selected_item):
         if selected_item == self.scanning_modes['360scan'][1]:
