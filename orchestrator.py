@@ -58,10 +58,6 @@ class Orchestrator:
         self.app = App(self.scanning_modes)
         self.tracking_flag = False
         self.detected_flag = False
-        #self.LINEARITY_NUM = 5
-        #self.route_line_points = {'x': [], 'y': []}
-        #self.linearity_counter = 0
-        #self.line = {'pt1': (), 'pt2': ()}
         self.linearity = Linearity()
 
         self.frame = None
@@ -94,11 +90,13 @@ class Orchestrator:
                 self.frame = self.display_module.draw_rectangle(self.frame, bbox, (255, 255, 0))
             else:
                 self.tracking_flag = False
+                self.detected_flag = False
                 self.linearity.reset()
         else:
             detection_status, det_bbox = self.detector.detect(self.frame)
             if detection_status:
                 #print('detected')
+                self.detected_flag = True
                 self.frame = self.display_module.draw_rectangle(self.frame, det_bbox, (0, 255, 0))
                 self.linearity.add_point(det_bbox, self.frame.shape[1])
                 if self.linearity.get_status():
@@ -106,10 +104,14 @@ class Orchestrator:
                     self.tracker.init(self.frame, det_bbox)
                     self.tracking_flag = True
                 #self.tracker = Tracker()
+            else:
+                self.detected_flag = False
 
         if self.linearity.get_status():
             pt1, pt2 = self.linearity.points()
             self.frame = cv2.line(self.frame, pt1, pt2, (255, 0, 0), 2)
+
+        self.frame = self.display_module.update_scanning_info(self.frame, self.detected_flag)
         user_image = self.app.get_app_image(self.display_module.draw_default_markup(self.frame))
         self.app.video.photo_image = user_image
         self.app.video.configure(image=user_image)
