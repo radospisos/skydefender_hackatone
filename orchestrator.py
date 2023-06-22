@@ -1,8 +1,9 @@
 from optical_module.optical_module import OpticalModule
 from display_module.graphics import Graphics
 from display_module.gui import App
-from optical_module.detection.detector import Detector
-from optical_module.tracking.tracker import Tracker
+from controller_module.controller import Controller
+from detection.detector import Detector
+from tracking.tracker import Tracker
 from tkinter import *
 from PIL import Image
 from PIL import ImageTk
@@ -44,6 +45,7 @@ class Orchestrator:
         self.camera_channel = camera_channel
         self.optical_module = OpticalModule(self.camera_channel)
         self.display_module = Graphics()
+        self.controller = Controller()
         self.detector = Detector()
         self.tracker = Tracker()
         self.frame = None
@@ -62,21 +64,26 @@ class Orchestrator:
         #self.line = {'pt1': (), 'pt2': ()}
         self.linearity = Linearity()
 
+        self.frame = None
+
+
     #def test_devices(self):
         #optical_module.camera.test_access(self.camera_channel)
 
     def full_range_scan(self):
+        self.controller.full_range_scan()
         print('Scanning 360 degrees..')
 
-    def sector_scan(self):
+    def sector_scan(self, lhs_angle, rhs_angle):
+        self.controller.sector_scan(lhs_angle, rhs_angle)
         print('Scanning sector..')
 
-    def sector_fix(self):
+    def sector_fix(self, angle):
+        self.controller.sector_fix(angle)
         print('Fixed in a sector..')
 
     def stream(self):
-        global label_widget
-        self.frames_counter += 1
+        #self.frames_counter += 1
         self.frame = self.optical_module.frame()
 
         if self.tracking_flag:
