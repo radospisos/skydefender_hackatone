@@ -33,11 +33,31 @@ class Graphics:
         image = cv2.line(image, (cx, cy-10), (cx, cy+10), (0, 0, 0), 2)
         return image
 
-    def show_image(self, image):
-        cv2.imshow(self.window_name, image)
-
-    def show_work_image(self, image):
-        self.show_image(self.draw_default_markup(image))
+    def update_scanning_info(self, image, scanning=False, scanning_mode=None, detection=False, tracking=False, approx=False):
+        scanning_status_txt = 'SCAN: ' + ('ON' if scanning else 'OFF')
+        image = cv2.putText(image, scanning_status_txt, (20, 20), cv2.FONT_HERSHEY_PLAIN,
+                   1, (0, 0, 0), 2, cv2.LINE_AA)
+        scanning_mode_status_txt = 'SCAN MODE: '
+        if scanning_mode == None:
+            scanning_mode_status_txt += '--'
+        elif scanning_mode == '360scan':
+            scanning_mode_status_txt += 'FULL RANGE'
+        elif scanning_mode == 'sector_scan':
+            scanning_mode_status_txt += 'SECTOR SCAN'
+        elif scanning_mode == 'sector_fix':
+            scanning_mode_status_txt += 'SECTOR FIX'
+        image = cv2.putText(image, scanning_mode_status_txt, (20, 40), cv2.FONT_HERSHEY_PLAIN,
+                   1, (0, 0, 0), 2, cv2.LINE_AA)
+        detection_status_txt = 'DETECTED: ' + ('YES' if detection else 'NO')
+        image = cv2.putText(image, detection_status_txt, (20, 60), cv2.FONT_HERSHEY_PLAIN,
+                   1, (0, 0, 0), 2, cv2.LINE_AA)
+        tracking_status_txt = 'TRACKING: ' + ('ON' if tracking else 'OFF')
+        image = cv2.putText(image, tracking_status_txt, (20, 80), cv2.FONT_HERSHEY_PLAIN,
+                   1, (0, 0, 0), 2, cv2.LINE_AA)
+        approx_status_txt = 'APPROXIMATION LINE: ' + ('ON' if tracking else 'OFF')
+        image = cv2.putText(image, approx_status_txt, (20, 100), cv2.FONT_HERSHEY_PLAIN,
+                   1, (0, 0, 0), 2, cv2.LINE_AA)
+        return image
 
     def draw_rectangle(self, image, rectangle, color):
         x, y, w, h = rectangle
