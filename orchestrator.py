@@ -2,8 +2,8 @@ from optical_module.optical_module import OpticalModule
 from display_module.graphics import Graphics
 from display_module.gui import App
 from controller_module.controller import Controller
-from detection.detector import Detector
-from tracking.tracker import Tracker
+from optical_module.detection.detector import Detector
+from optical_module.tracking.tracker import Tracker
 from tkinter import *
 from PIL import Image
 from PIL import ImageTk
