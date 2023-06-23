@@ -5,13 +5,12 @@ class Tracker:
         self.tracker = cv2.legacy.TrackerMedianFlow_create()
 
     def init(self, frame, bbox):
-        #if frame.empty():
-        #    pass
-        self.tracker.init(frame, bbox)
+        try:
+            self.tracker.init(frame, bbox)
+        except:
+            raise ValueError('invalid frame or bounding box')
 
     def update(self, frame):
-        #if frame.empty():
-        #    pass
         ok, bbox = self.tracker.update(frame)
         if not ok:
             pass
