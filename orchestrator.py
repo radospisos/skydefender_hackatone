@@ -85,9 +85,3 @@ class Orchestrator:
 
     def mainloop(self):
         self.gui.mainloop()
-
-
-o = Orchestrator()
-
-o.stream()
-o.mainloop()
