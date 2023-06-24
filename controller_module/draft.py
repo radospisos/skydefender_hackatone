@@ -41,6 +41,6 @@ class MotoControll():
                     tilt_mid = 0
                     print('Pan is out of range')
                 # Тут должен быть угол поворота двигателя:
-                self.x_Moto.moveClockwise(angle_to_tilt=pan_mid)# Угол поворота по горизонтали = pan
-                self.y_Moto.moveClockwise(angle_to_tilt=tilt_mid)# Угол поворота по вертикали = tilt
+                self.x_Moto.move(angle_to_tilt=pan_mid)# Угол поворота по горизонтали = pan
+                self.y_Moto.move(angle_to_tilt=tilt_mid)# Угол поворота по вертикали = tilt
                 break
